@@ -51,7 +51,7 @@
 # Вывести результат из списка answer.
 '''
 
-def hours(a):
+def hours_answer(a):
     if a == 1 or a == 13:
         answer.append(a % 12)
         answer.append('час')
@@ -65,7 +65,7 @@ def hours(a):
         answer.append(a % 12)
         answer.append('часов')
 
-def minutes(a):
+def minutes_answer(a):
     if a == 0:
         answer.append('ровно')
     elif a == 1 or a == 21 or a == 31 or a == 41 or a == 51:
@@ -78,7 +78,7 @@ def minutes(a):
         answer.append(a)
         answer.append('минут')
 
-def day(hour, answer):
+def day_answer(hour, answer):
     if hour < 6 and hour != 0:
         answer.append('ночи')
     if 5 < hour < 12:
@@ -92,17 +92,17 @@ def day(hour, answer):
 hour, minute = list(map(int,input('Введите время:  ').split()))
 answer = []
 
-if not 0 <= hour <= 23:
+if not 0 <= hour <= 23 or (hour == -0):
         print('Введены недопустимые данные: часы должны быть от 0 до 23.')
-elif not 0 <= minute <=59:
+elif not 0 <= minute <=59 or (hour == -0):
     print('Введены недопустимые данные: минуты должны быть от 0 до 59.')
 elif hour == 0 and minute == 0:
         print('полночь')
 elif hour == 12 and minute == 0:
     print('полдень')
 else:
-    hours(hour)
-    minutes(minute)
-    day(hour, answer)
+    hours_answer(hour)
+    minutes_answer(minute)
+    day_answer(hour, answer)
 
     print(*answer)
