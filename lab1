@@ -50,32 +50,31 @@
 
 # Вывести результат из списка answer.
 '''
-
-def hours_answer(a):
-    if a == 1 or a == 13:
-        answer.append(a % 12)
+def hours_answer(hours):
+    if hours == 1 or hours == 13:
+        answer.append(hours % 12)
         answer.append('час')
-    elif 2 <= a <= 4 or 14 <= a <= 16:
-        answer.append(a % 12)
+    elif 2 <= hours <= 4 or 14 <= hours <= 16:
+        answer.append(hours % 12)
         answer.append('часа')
-    elif a == 12:
+    elif hours == 12:
         answer.append(12)
         answer.append('часов')
-    elif a == 0 or 5 <= a <= 11 or 17 <= a <= 23:
-        answer.append(a % 12)
+    elif hours == 0 or 5 <= hours <= 11 or 17 <= hours <= 23:
+        answer.append(hours % 12)
         answer.append('часов')
 
-def minutes_answer(a):
-    if a == 0:
+def minutes_answer(minutes):
+    if minutes == 0:
         answer.append('ровно')
-    elif a == 1 or a == 21 or a == 31 or a == 41 or a == 51:
-        answer.append(a)
+    elif minutes == 1 or minutes == 21 or minutes == 31 or minutes == 41 or minutes == 51:
+        answer.append(minutes)
         answer.append('минута')
-    elif 2 <= a <= 4 or 22 <= a <= 24 or 32 <= a <= 34 or 42 <= a <= 44 or 52 <= a <=54:
-        answer.append(a)
+    elif 2 <= minutes <= 4 or 22 <= minutes <= 24 or 32 <= minutes <= 34 or 42 <= minutes <= 44 or 52 <= minutes <=54:
+        answer.append(minutes)
         answer.append('минуты')
-    elif 5 <= a <= 20 or 25 <= a <= 30 or 35 <= a <= 40 or 45 <= a <= 50 or 55 <= a <= 59:
-        answer.append(a)
+    elif 5 <= minutes <= 20 or 25 <= minutes <= 30 or 35 <= minutes <= 40 or 45 <= minutes <= 50 or 55 <= minutes <= 59:
+        answer.append(minutes)
         answer.append('минут')
 
 def day_answer(hour, answer):
