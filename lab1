@@ -58,7 +58,7 @@ def minutes_answer(minutes):
         answer += ' '
         answer += str(minutes)
         answer += ' минута'
-    elif 2 <= minutes <= 4 or 22 <= minutes <= 24 or 32 <= minutes <= 34 or 42 <= minutes <= 44 or 52 <= minutes <=54:
+    elif minutes % 10 == 2 or minutes % 10 == 3 or minutes % 10 == 4:
         answer += ' '
         answer += str(minutes)
         answer += ' минуты'
