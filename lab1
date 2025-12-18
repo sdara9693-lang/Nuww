@@ -36,7 +36,6 @@
 #
 # выводим результат
 '''
-
 def hours_answer(hours):
     answer = ''
     if hours == 1 or hours == 13:
@@ -55,7 +54,7 @@ def hours_answer(hours):
 
 def minutes_answer(minutes):
     answer = ''
-    if minutes == 1 or minutes == 21 or minutes == 31 or minutes == 41 or minutes == 51:
+    if minutes % 10 == 1 and minutes // 10 != 1:
         answer += ' '
         answer += str(minutes)
         answer += ' минута'
@@ -104,11 +103,11 @@ user_input = list(input('Введите кол-во часов и минут ч�
 if len(user_input) != 2:
     print('ввод неккоретный')
 else:
-    hours = user_input[0]
-    minutes = user_input[1]
-    if check(hours) == False or check(minutes) == False:
+    hours_str = user_input[0]
+    minutes_str = user_input[1]
+    if check(hours_str) == False or check(minutes_str) == False:
         print('ввод неккоректен')
     else:
-        hours = int(hours)
-        minutes = int(minutes)
+        hours = int(hours_str)
+        minutes = int(minutes_str)
         print(day_answer(hours, minutes))
