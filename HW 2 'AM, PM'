@@ -1,0 +1,145 @@
+'''
+# вводим часы и минуты через пробел
+# вводим режим вывода времени
+
+# если введено не два значения времени, то
+#   выводим сообщение об ошибке
+# иначе
+#   сохраняем часы и минуты отдельно
+
+# проверяем, что часы и минуты состоят из цифр
+# если проверка не пройдена, то
+#   выводим сообщение об ошибке
+# иначе
+#   переводим часы и минуты в целые числа
+
+# если выбран режим 12-часового формата, то
+#   переводим время в формат am/pm
+#   выводим время в 12-часовом формате
+# иначе
+#   определяем корректность часов и минут
+
+# если время равно 00:00, то
+#   выводим полночь
+# если время равно 12:00, то
+#   выводим полдень
+# иначе
+#   определяем часть суток
+
+# подбираем правильную форму слова час
+# подбираем правильную форму слова минута
+
+# если минуты равны 0 и это не полночь и не полдень, то
+# добавляем слово ровно
+
+# выводим результат
+'''
+
+def hours_answer(hours):
+    answer = ''
+    if hours == 1 or hours == 13:
+        answer += str(hours % 12)
+        answer += (' час')
+    elif 2 <= hours <= 4 or 14 <= hours <= 16:
+        answer += str(hours % 12)
+        answer += (' часа')
+    elif hours == 12:
+        answer += str(hours)
+        answer += (' часов')
+    elif hours == 0 or 5 <= hours <= 11 or 17 <= hours <= 23:
+        answer += str(hours % 12)
+        answer += (' часов')
+    return answer
+
+def hours_answer_two(hours):
+    answer = ''
+    if 0 < hours <= 12:
+        answer += str(hours % 12)
+    elif 13 <= hours <= 24 or hours == 0:
+        answer += str(hours % 12)
+    return answer
+
+def minutes_answer(minutes):
+    answer = ''
+    if minutes % 10 == 1 and minutes // 10 != 1:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минута'
+    elif (minutes % 10 == 2 or minutes % 10 == 3 or minutes % 10 == 4) and minutes != 13:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минуты'
+    elif 5 <= minutes <= 20 or 25 <= minutes <= 30 or 35 <= minutes <= 40 or 45 <= minutes <= 50 or 55 <= minutes <= 59:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минут'
+    return answer
+
+def minutes_answer_two(minutes):
+    answer = ''
+    if 10 <= minutes <= 59:
+        answer += str(minutes)
+    elif 0 <= minutes <= 9:
+        answer += '0' + str(minutes)
+    return answer
+
+def day_answer_two(hour, minutess):
+    answer = ''
+    if not 0 <= hour < 24:
+        answer = 'Введены недопустимые данные: часы должны быть от 0 до 23.'
+    elif not 0 <= minutess <= 59:
+        answer = 'Введены недопустимые данные: минуты должны быть от 0 до 59.'
+    elif 0 <= hour <= 11:
+        answer += hours_answer_two(hour) + ':'+ minutes_answer_two(minutess) + ' AM'
+    elif 12 <= hour <= 23:
+        answer += hours_answer_two(hour) + ':' + minutes_answer_two(minutess) + ' PM'
+    return answer
+
+def day_answer(hour, minutess):
+    answer = ''
+    if not 0 <= hour < 24:
+        answer = 'Введены недопустимые данные: часы должны быть от 0 до 23.'
+    elif not 0 <= minutess <= 59:
+        answer = 'Введены недопустимые данные: минуты должны быть от 0 до 59.'
+    elif hour == 0 and minutess == 0:
+        answer = 'полночь'
+    elif hour == 12 and minutess == 0:
+        answer = 'полдень'
+    elif 0 <= hour < 6:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' ночи'
+    elif 6 <= hour < 12:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' утра'
+    elif 12 <= hour < 18:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' дня'
+    elif 18 <= hour < 24:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' вечера'
+    if minutess == 0 and hour != 0 and hour != 12:
+        answer += ' ровно'
+    return answer
+
+def check(input_user):
+    input_user = str(input_user)
+    for i in range (len(input_user) - 1):
+        if input_user[i] in '0123456789' and input_user[i + 1] in '0123456789':
+            return True
+        else:
+            return False
+
+user_input = list(input('Введите кол-во часов и минут через пробел: ').split())
+user_input_two = input('Введите "10", если хотите получить время в 12-часовом формате (С указанием AM/PM), или "11": ')
+
+if len(user_input) != 2:
+    print('ввод неккоретный')
+else:
+    hours_str = user_input[0]
+    minutes_str = user_input[1]
+    if check(hours_str) == False or check(minutes_str) == False:
+        print('ввод неккоректен')
+    elif str(user_input_two) == '10' :
+        hours = int(hours_str)
+        minutes = int(minutes_str)
+        print(day_answer_two(hours, minutes))
+    else:
+        hours = int(hours_str)
+        minutes = int(minutes_str)
+        print(day_answer(hours, minutes))
