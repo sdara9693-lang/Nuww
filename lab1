@@ -1,107 +1,120 @@
 '''
-# Алгоритм работы программы:
+# вводим строку с часами и минутами
+# если получено не два значения, то
+#    выводим сообщение об ошибке и завершаем работу
+# первое значение считаем часами, второе минутами
+# если у часов есть ведущий ноль, то
+#   удаляем его
+# если у минут есть ведущий ноль, то
+#   удаляем его
 #
-# Ввести часы и минуты.
-# Создать пустой список answer.
+# проверяем, что часы и минуты являются числами
+# если проверка не пройдена, то
+#   выводим сообщение об ошибке и завершаем работу
 #
-# Проверить правильность данных:
-# - Если часы не от 0 до 23, вывести ошибку.
-# - Если минуты не от 0 до 59, вывести ошибку.
+# переводим часы и минуты в целые числа
 #
-# Проверить особые случаи:
-# - Если 0:00, вывести "полночь".
-# - Если 12:00, вывести "полдень".
+# если часы не в диапазоне от 0 до 23, то
+#   выводим сообщение об ошибке
+# если минуты не в диапазоне от 0 до 59, то
+#   выводим сообщение об ошибке
 #
-# Если особых случаев нет:
+# если часы равны 0 и минуты равны 0, то
+#   выводим полночь
+# иначе если часы равны 12 и минуты равны 0, то
+#   выводим полдень
+# иначе
+#   определяем часть суток по значению часов
 #
-# Определить правильное написание часов:
-# - Если час = 1 или 13:
-#   - Добавить в список (час % 12).
-#   - Добавить в список "час".
-# - Если час от 2 до 4 или от 14 до 16:
-#   - Добавить в список (час % 12).
-#   - Добавить в список "часа".
-# - Если час = 12:
-#   - Добавить в список 12.
-#   - Добавить в список "часов".
-# - Если час = 0, или от 5 до 11, или от 17 до 23:
-#   - Добавить в список (час % 12).
-#   - Добавить в список "часов".
-
-# Определить правильное написание минут:
-# - Если минуты = 0:
-#   - добавить "ровно".
-# - Если 1, 21, 31, 41, 51:
-    - добавить "минута".
-# - Если 2-4, 22-24, 32-34, 42-44, 52-54:
-    - добавить "минуты".
-# - Остальные случаи:
-    - добавить "минут".
-
-# Определить часть суток:
-# - Если час меньше 6 и не равен 0:
-    - Добавить в список "ночи".
-# - Если от 6 до 11:
-    - Добавить в список "утра".
-# - Если от 12 до 17:
-    - Добавить в список "дня".
-# - Если от 18 до 23:
-    - Добавить в список "вечера".
-
-# Вывести результат из списка answer.
+# определяем правильную форму слова час
+# определяем правильную форму слова минута
+#
+# формируем строку ответа
+#
+# если минуты равны 0 и часы не равны 0 и не равны 12, то
+#   добавляем слово ровно
+#
+# выводим результат
 '''
+
 def hours_answer(hours):
+    answer = ''
     if hours == 1 or hours == 13:
-        answer.append(hours % 12)
-        answer.append('час')
+        answer += str(hours % 12)
+        answer += (' час')
     elif 2 <= hours <= 4 or 14 <= hours <= 16:
-        answer.append(hours % 12)
-        answer.append('часа')
+        answer += str(hours % 12)
+        answer += (' часа')
     elif hours == 12:
-        answer.append(12)
-        answer.append('часов')
+        answer += str(hours)
+        answer += (' часов')
     elif hours == 0 or 5 <= hours <= 11 or 17 <= hours <= 23:
-        answer.append(hours % 12)
-        answer.append('часов')
+        answer += str(hours % 12)
+        answer += (' часов')
+    return answer
 
 def minutes_answer(minutes):
-    if minutes == 0:
-        answer.append('ровно')
-    elif minutes == 1 or minutes == 21 or minutes == 31 or minutes == 41 or minutes == 51:
-        answer.append(minutes)
-        answer.append('минута')
+    answer = ''
+    if minutes == 1 or minutes == 21 or minutes == 31 or minutes == 41 or minutes == 51:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минута'
     elif 2 <= minutes <= 4 or 22 <= minutes <= 24 or 32 <= minutes <= 34 or 42 <= minutes <= 44 or 52 <= minutes <=54:
-        answer.append(minutes)
-        answer.append('минуты')
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минуты'
     elif 5 <= minutes <= 20 or 25 <= minutes <= 30 or 35 <= minutes <= 40 or 45 <= minutes <= 50 or 55 <= minutes <= 59:
-        answer.append(minutes)
-        answer.append('минут')
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минут'
+    return answer
 
-def day_answer(hour, answer):
-    if hour < 6 and hour != 0:
-        answer.append('ночи')
-    if 5 < hour < 12:
-        answer.append('утра')
-    if 11 < hour < 18:
-        answer.append('дня')
-    if 17 < hour < 24:
-        answer.append('вечера')
+def day_answer(hour, minutess):
+    answer = ''
+    if not 0 <= hour < 24:
+        answer = 'Введены недопустимые данные: часы должны быть от 0 до 23.'
+    elif not 0 <= minutess <= 59:
+        answer = 'Введены недопустимые данные: минуты должны быть от 0 до 59.'
+    elif hour == 0 and minutess == 0:
+        answer = 'полночь'
+    elif hour == 12 and minutess == 0:
+        answer = 'полдень'
+    elif 0 <= hour < 6:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' ночи'
+    elif 6 <= hour < 12:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' утра'
+    elif 12 <= hour < 18:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' дня'
+    elif 18 <= hour < 24:
+        answer = hours_answer(hour) + minutes_answer(minutess) + ' вечера'
+    if minutess == 0 and hour != 0 and hour != 12:
+        answer += ' ровно'
+    return answer
+
+def check(input_user):
+    input_user = str(input_user)
+    for i in range (len(input_user) - 1):
+        if input_user[i] in '0123456789' and input_user[i + 1] in '0123456789':
+            return True
+        else:
+            return False
 
 
-hour, minute = list(map(int,input('Введите время:  ').split()))
+user_input = list(input('Введите кол-во часов и минут через пробел: ').split())
 answer = []
 
-if not 0 <= hour <= 23 or (hour == -0):
-        print('Введены недопустимые данные: часы должны быть от 0 до 23.')
-elif not 0 <= minute <=59 or (hour == -0):
-    print('Введены недопустимые данные: минуты должны быть от 0 до 59.')
-elif hour == 0 and minute == 0:
-        print('полночь')
-elif hour == 12 and minute == 0:
-    print('полдень')
+if len(user_input) != 2:
+    print('ввод неккоретный')
 else:
-    hours_answer(hour)
-    minutes_answer(minute)
-    day_answer(hour, answer)
-
-    print(*answer)
+    hours = user_input[0]
+    minutes = user_input[1]
+    if len(hours) > 1 and hours[0] == 0:
+        hours = hours[1:]
+    if len(minutes) > 1 and minutes[0] == 0:
+        minutes = minutes[1:]
+    if check(hours) == False or check(minutes) == False:
+        print('ввод неккоректен')
+    else:
+        hours = int(hours)
+        minutes = int(minutes)
+        print(day_answer(hours, minutes))
