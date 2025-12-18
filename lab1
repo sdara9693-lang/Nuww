@@ -101,7 +101,6 @@ def check(input_user):
 
 
 user_input = list(input('Введите кол-во часов и минут через пробел: ').split())
-answer = []
 
 if len(user_input) != 2:
     print('ввод неккоретный')
