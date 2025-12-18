@@ -1,0 +1,113 @@
+'''
+# вводим четыре значения времени через пробел
+# первое и второе значение - часы и минуты первого времени
+# третье и четвёртое значение - часы и минуты второго времени
+
+# если введено не четыре значения, то
+#   выводим сообщение об ошибке
+# иначе
+#   сохраняем часы и минуты каждого времени отдельно
+
+# проверяем, что все введённые значения состоят из цифр
+# если хотя бы одно значение некорректно, то
+#   выводим сообщение об ошибке
+# иначе
+#   переводим часы и минуты в целые числа
+
+# проверяем корректность диапазона часов
+# если часы не от 0 до 23, то
+#   выводим сообщение об ошибке
+
+# проверяем корректность диапазона минут
+# если минуты не от 0 до 59, то
+#   выводим сообщение об ошибке
+
+# переводим каждое время в количество минут
+
+# сравниваем два времени
+
+# если первое время меньше второго, то
+# находим разницу между вторым и первым временем
+
+# если первое время больше второго, то
+#   находим разницу между первым и вторым временем
+
+# если времена равны, то
+#   выводим 0 часов
+
+# переводим разницу в часы и минуты
+
+# подбираем правильную форму слова час
+# подбираем правильную форму слова минута
+
+# выводим разницу между двумя временами
+'''
+
+def minutes_answer(minutes):
+    answer = ''
+    if minutes % 10 == 1 and minutes // 10 != 1:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минута'
+    elif minutes % 10 == 2 or minutes % 10 == 3 or minutes % 10 == 4:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минуты'
+    elif 5 <= minutes <= 20 or 25 <= minutes <= 30 or 35 <= minutes <= 40 or 45 <= minutes <= 50 or 55 <= minutes <= 59:
+        answer += ' '
+        answer += str(minutes)
+        answer += ' минут'
+    return answer
+
+def hours_answer(hours):
+    answer = ''
+    if hours == 1 or hours == 13:
+        answer += str(hours % 12)
+        answer += (' час')
+    elif 2 <= hours <= 4 or 14 <= hours <= 16:
+        answer += str(hours % 12)
+        answer += (' часа')
+    elif hours == 12:
+        answer += str(hours)
+        answer += (' часов')
+    elif hours == 0 or 5 <= hours <= 11 or 17 <= hours <= 23:
+        answer += str(hours % 12)
+        answer += (' часов')
+    return answer
+def check(input_user):
+    input_user = str(input_user)
+    for i in range (len(input_user) - 1):
+        if input_user[i] in '0123456789' and input_user[i + 1] in '0123456789':
+            return True
+        else:
+            return False
+
+user_input = list(input('Введите два времени через пробел (часы и минуты для каждого через пробел): ').split())
+
+if len(user_input) != 4:
+    print('ввод неккоретный')
+else:
+    hours_1_str = user_input[0]
+    minutes_1_str = user_input[1]
+    hours_2_str = user_input[2]
+    minutes_2_str = user_input[3]
+    if check(hours_1_str) == False or check(minutes_1_str) == False or check(hours_2_str) == False or check(minutes_2_str) == False:
+        print('ввод неккоректен')
+    else:
+        hours_1 = int(hours_1_str)
+        minutes_1 = int(minutes_1_str)
+        hours_2 = int(hours_2_str)
+        minutes_2 = int(minutes_2_str)
+    if not 0 <= hours_1 < 24 or not 0 <= hours_2 < 24:
+        print('Введены недопустимые данные: часы должны быть от 0 до 23.')
+    elif not 0 <= minutes_1 <= 59 or not 0 <= minutes_2 <= 59:
+        print('Введены недопустимые данные: минуты должны быть от 0 до 59.')
+    else:
+        time_1 = hours_1 * 60 + minutes_1
+        time_2 = hours_2 * 60 + minutes_2
+        if time_1 < time_2:
+            print(hours_answer((time_2 - time_1) // 60), minutes_answer((time_2 - time_1) % 60))
+        elif time_1 > time_2:
+            print(hours_answer((time_1 - time_2) // 60), minutes_answer((time_1 - time_2) % 60))
+        elif time_1 == time_2:
+            print(0, 'часов')
