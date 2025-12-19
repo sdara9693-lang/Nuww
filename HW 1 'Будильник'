@@ -43,6 +43,7 @@
 '''
 
 import datetime
+import time
 
 def hours_answer(hours):
     answer = ''
@@ -59,6 +60,20 @@ def hours_answer(hours):
         answer += str(hours % 12)
         answer += (' часов')
     return answer
+
+def hours_answer_two(hours):
+    answer = ''
+    if hours == 1 or hours == 21:
+        answer += str(hours)
+        answer += (' час')
+    elif 2 <= hours % 10 <= 4 and hours // 10 != 1:
+        answer += str(hours)
+        answer += (' часа')
+    else:
+        answer += str(hours)
+        answer += (' часов')
+    return answer
+
 
 def minutes_answer(minutes):
     answer = ''
@@ -120,9 +135,29 @@ else:
     else:
         hours = int(hours_str)
         minutes = int(minutes_str)
+        hours_now = int(now_str[0:2])
+        minutes_now = int(now_str[3:5])
         if not 0 <= hours < 24:
             print('Введены недопустимые данные: часы должны быть от 0 до 23.')
         elif not 0 <= minutes <= 59:
             print('Введены недопустимые данные: минуты должны быть от 0 до 59.')
         else:
             print('Будильник установлен на', day_answer(hours, minutes))
+            if (hours * 60 + minutes) > (hours_now * 60 + minutes_now):
+                time_one = (hours * 60 + minutes) - (hours_now * 60 + minutes_now)
+                while True:
+                    print('Будильник прозвенит через: ', hours_answer_two(time_one // 60), minutes_answer(time_one % 60))
+                    time_one = (time_one - 1)
+                    time.sleep(60)
+                    if time_one == 0:
+                        print('Дзынь-дзынь!')
+                        break
+            elif (hours * 60 + minutes) < (hours_now * 60 + minutes_now):
+                time_one = 1440 - (hours_now * 60 + minutes_now) + (hours * 60 + minutes)
+                while True:
+                    print('Будильник прозвенит через: ', hours_answer_two(time_one // 60), minutes_answer(time_one % 60))
+                    time_one = (time_one - 1)
+                    time.sleep(60)
+                    if time_one == 0:
+                        print('Дзынь-дзынь!')
+                        break
