@@ -78,11 +78,7 @@ def minutes_answer(minutes):
 
 def day_answer(hour, minutess):
     answer = ''
-    if not 0 <= hour < 24:
-        answer = 'Введены недопустимые данные: часы должны быть от 0 до 23.'
-    elif not 0 <= minutess <= 59:
-        answer = 'Введены недопустимые данные: минуты должны быть от 0 до 59.'
-    elif hour == 0 and minutess == 0:
+    if hour == 0 and minutess == 0:
         answer = 'полночь'
     elif hour == 12 and minutess == 0:
         answer = 'полдень'
@@ -124,4 +120,9 @@ else:
     else:
         hours = int(hours_str)
         minutes = int(minutes_str)
-        print('Будильник установлен на', day_answer(hours, minutes))
+        if not 0 <= hours < 24:
+            print('Введены недопустимые данные: часы должны быть от 0 до 23.')
+        elif not 0 <= minutes <= 59:
+            print('Введены недопустимые данные: минуты должны быть от 0 до 59.')
+        else:
+            print('Будильник установлен на', day_answer(hours, minutes))
