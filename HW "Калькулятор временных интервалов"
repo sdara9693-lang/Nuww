@@ -49,11 +49,11 @@ def minutes_answer(minutes):
         answer += ' '
         answer += str(minutes)
         answer += ' минута'
-    elif minutes % 10 == 2 or minutes % 10 == 3 or minutes % 10 == 4:
+    elif 2 <= minutes % 10 <= 4 and minutes // 10 != 1:
         answer += ' '
         answer += str(minutes)
         answer += ' минуты'
-    elif 5 <= minutes <= 20 or 25 <= minutes <= 30 or 35 <= minutes <= 40 or 45 <= minutes <= 50 or 55 <= minutes <= 59:
+    else:
         answer += ' '
         answer += str(minutes)
         answer += ' минут'
@@ -61,17 +61,14 @@ def minutes_answer(minutes):
 
 def hours_answer(hours):
     answer = ''
-    if hours == 1 or hours == 13:
-        answer += str(hours % 12)
-        answer += (' час')
-    elif 2 <= hours <= 4 or 14 <= hours <= 16:
-        answer += str(hours % 12)
-        answer += (' часа')
-    elif hours == 12:
+    if hours == 1 or hours == 21:
         answer += str(hours)
-        answer += (' часов')
-    elif hours == 0 or 5 <= hours <= 11 or 17 <= hours <= 23:
-        answer += str(hours % 12)
+        answer += (' час')
+    elif 2 <= hours % 10 <= 4 and hours // 10 != 1:
+        answer += str(hours)
+        answer += (' часа')
+    else:
+        answer += str(hours)
         answer += (' часов')
     return answer
 def check(input_user):
