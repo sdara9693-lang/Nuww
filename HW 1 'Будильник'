@@ -41,7 +41,6 @@
 
 # выводим сообщение о том, что будильник установлен, и время будильника
 '''
-
 import datetime
 import time
 
@@ -81,11 +80,11 @@ def minutes_answer(minutes):
         answer += ' '
         answer += str(minutes)
         answer += ' минута'
-    elif (minutes % 10 == 2 or minutes % 10 == 3 or minutes % 10 == 4) and minutes != 13:
+    elif 2 <= minutes % 10 <= 4 and minutes != 13:
         answer += ' '
         answer += str(minutes)
         answer += ' минуты'
-    elif 5 <= minutes <= 20 or 25 <= minutes <= 30 or 35 <= minutes <= 40 or 45 <= minutes <= 50 or 55 <= minutes <= 59:
+    else:
         answer += ' '
         answer += str(minutes)
         answer += ' минут'
