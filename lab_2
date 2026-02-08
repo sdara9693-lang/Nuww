@@ -1,0 +1,221 @@
+'''
+# Выводим сообщение с выбором режима:
+# 1 - демонстративный
+# 2 - интерактивный
+# Считываем выбор пользователя в переменную otvet
+
+# Если otvet не "1" и не "2":
+#   Выводим сообщение "Некорректный ввод. Повторите попытку"
+#   Завершаем программу
+
+# Если otvet = "1":
+#   Создаем массив из 10 случайных чисел от 0 до 99
+#   Выводим исходный массив
+#   Сортируем массив тремя методами (пузырёк, выбор, вставки)
+#   Для каждой сортировки выводим:
+#       отсортированный массив
+#       количество сравнений
+#       количество перестановок
+
+# Если otvet = "2":
+#   Запускаем цикл до выхода пользователя:
+#       Выводим выбор: ввести массив, сгенерировать случайный массив, стоп
+#       Считываем выбор в переменную answer
+
+#       Если answer = "0":
+#          завершаем программу
+
+#       Если answer = "1":
+#           Считываем строку чисел, проверяем корректность
+#           Преобразуем в список целых чисел
+
+#         Если answer = "2":
+#             Считываем размер массива
+#             Создаем случайный массив и выводим его
+
+#         Предлагаем выбрать метод сортировки: пузырёк, выбор, вставки, стоп
+#         Считываем выбор в переменную ans
+
+#         Если ans = "0":
+#            выходим из выбора сортировки
+
+#         Если ans = "3", "4" или "5":
+#             Выполняем соответствующую сортировку
+#             Выводим отсортированный массив, количество сравнений и перестановок
+
+#         Если ans некорректен:
+#           выводим сообщение "Введите корректное число"
+'''
+
+import random
+
+def selection_sort(a):
+    list = a.copy()
+    spav = 0
+    peres = 0
+    for i in range(len(list) - 1):
+        min_i = i
+        for j in range(i + 1, len(list)):
+            spav += 1
+            if list[j] < list[min_i]:
+                min_i = j
+        if min_i != i:
+            list[i], list[min_i] = list[min_i], list[i]
+            peres += 1
+
+    return list, spav, peres
+
+def bubble_sort(a):
+    list = a.copy()
+    spav = 0
+    peres = 0
+    for i in range(len(list) - 1):
+        for j in range(len(list) - i - 1):
+            spav += 1
+            if list[j] > list[j + 1]:
+                list[j], list[j + 1] = list[j + 1], list[j]
+                peres += 1
+
+    return list, spav, peres
+
+def insertion_sort(a):
+    list = a.copy()
+    spav = 0
+    peres = 0
+    for i in range(1, len(list)):
+        x = list[i]
+        j = i - 1
+        while j >= 0 and a[j] > x:
+            spav += 1
+            list[j + 1] = list[j]
+            peres += 1
+            j -= 1
+        if j >= 0:
+            spav += 1
+        list[j + 1] = x
+
+    return list, spav, peres
+
+
+print("Выберите режим:")
+print("1 - демонстративный")
+print("2 - интерактивный")
+otvet = input()
+
+if otvet == "1":
+    sss = [random.randint(0, 99) for i in range(10)]
+    print("1 - Исходный массив:", sss)
+
+    bubble = bubble_sort(sss)
+    selection = selection_sort(sss)
+    insertion = insertion_sort(sss)
+
+    print("\nПузырёк:", bubble[0])
+    print("Сравнения:", bubble[1], "Перестановки:", bubble[2])
+
+    print("\nВыбором:", selection[0])
+    print("Сравнения:", selection[1], "Перестановки:", selection[2])
+
+    print("\nВставками:", insertion[0])
+    print("Сравнения:", insertion[1], "Перестановки:", insertion[2])
+
+elif otvet == "2":
+    sss = []
+    while True:
+        print("1 - ввести массив")
+        print("2 - случайный массив")
+
+        answer = input()
+
+        if answer == "1":
+            sss = input('Введите числа: ').split()
+            check = True
+            for i in sss:
+                if not i.isdigit():
+                    if i[0]!='-':
+                        check = False
+                    else:
+                        if not i[1:].isdigit():
+                            check = False
+                    break
+            if check == False:
+                print('Ввод неккоректен.')
+            else:
+                sss = list(map(int,sss))
+                while True:
+                    print("Выберите сортировку:")
+                    print("3 - пузырёк")
+                    print("4 - выбором")
+                    print("5 - вставками")
+                    print("0 - стоп")
+                    ans = input()
+
+                    if ans == "3":
+                        r = bubble_sort(sss)
+                        print("Результат:", r[0])
+                        print("Сравнения:", r[1], "Перестановки:", r[2])
+                        break
+
+                    elif ans == "4":
+                        r = selection_sort(sss)
+                        print("Результат:", r[0])
+                        print("Сравнения:", r[1], "Перестановки:", r[2])
+                        break
+
+                    elif ans == "5":
+                        r = insertion_sort(sss)
+                        print("Результат:", r[0])
+                        print("Сравнения:", r[1], "Перестановки:", r[2])
+                        break
+
+                    elif ans == "0":
+                        break
+
+                    else:
+                        print("Введите корректное число")
+                break
+
+        elif answer == "2":
+            n = int(input("Размер массива: "))
+            sss = [random.randint(0, 99) for i in range(n)]
+            print("Массив:", sss)
+            while True:
+                print("Выберите сортировку:")
+                print("3 - пузырёк")
+                print("4 - выбором")
+                print("5 - вставками")
+                print("0 - стоп")
+
+                ans = input()
+
+
+                if ans == "3":
+                    r = bubble_sort(sss)
+                    print("Результат:", r[0])
+                    print("Сравнения:", r[1], "Перестановки:", r[2])
+                    break
+                elif ans == "4":
+                    r = selection_sort(sss)
+                    print("Результат:", r[0])
+                    print("Сравнения:", r[1], "Перестановки:", r[2])
+                    break
+
+                elif ans == "5":
+                    r = insertion_sort(sss)
+                    print("Результат:", r[0])
+                    print("Сравнения:", r[1], "Перестановки:", r[2])
+                    break
+
+                elif ans == "0":
+                    break
+
+                else:
+                    print("Введите корректное число")
+            break
+
+        elif answer == "0":
+            break
+        else:
+            print("Неверная команда")
+else:
+    print("Некорректный ввод. Повторите попытку")
